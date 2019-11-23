@@ -1,6 +1,6 @@
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-public class Item {
+public abstract class Item {
     private SimpleIntegerProperty itemCode;
     private SimpleStringProperty itemName;
     private SimpleIntegerProperty quantity;

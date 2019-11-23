@@ -29,7 +29,7 @@ public class Examples extends Application {
 
     public void start(Stage s) {
         TableView<Person> tbl; //table view to store person objects
-        tbl = new TableView<>();
+        tbl = new TableView<Person>();
         Alert alerts = new Alert(Alert.AlertType.INFORMATION); //success message
         Alert alerte = new Alert(Alert.AlertType.ERROR); //Error message
         Scene sc1, sc2, sc3; // scenes
@@ -244,5 +244,17 @@ public class Examples extends Application {
 
     public static void main (String[]args){
         launch(args);
+    }
+    public double categoryFinder(String s){
+        if(s.equals("bananas") || s.equals("apple") || s.equals("oranges") || s.equals("Advil") || s.equals("Ibuprofen") || s.equals("Tylenol")){
+            return 1;
+        }
+        else if (s.equals("twix") || s.equals("nerds") || s.equals("chicken") || s.equals("beef") || s.equals("bike") || s.equals("phone") ){
+            return 2;
+        }
+        else{
+            return 3;
+        }
+
     }
 }
