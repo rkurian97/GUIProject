@@ -25,11 +25,11 @@ public class Examples extends Application {
     private VBox vb3 = new VBox();
 
     // ObservableList is a list that enables listeners to track changes when they occur
-    private ObservableList<Person> data;
+    private ObservableList<Item> data;
 
     public void start(Stage s) {
-        TableView<Person> tbl; //table view to store person objects
-        tbl = new TableView<Person>();
+        TableView<Item> tbl; //table view to store person objects
+        tbl = new TableView<>();
         Alert alerts = new Alert(Alert.AlertType.INFORMATION); //success message
         Alert alerte = new Alert(Alert.AlertType.ERROR); //Error message
         Scene sc1, sc2, sc3; // scenes
@@ -54,45 +54,74 @@ public class Examples extends Application {
         final Label l1 = new Label("Grocery List");
         l1.setFont(new Font("Arial", 20));
         //Column1
-        TableColumn namecol = new TableColumn("Item Code");
-        namecol.setMinWidth(10);
+        TableColumn itemcol = new TableColumn("Item Code");
+        itemcol.setMinWidth(10);
        /* A TableColumn must have a cell value factory set on it.
        The cell value factory extracts the value to be displayed in each cell
        (on each row) in the column.
         The PropertyValueFactory factory can extract a property value (field value) from a Java object.
         The name of the property is passed as a parameter to the PropertyValueFactory constructor
         */
-        namecol.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+        itemcol.setCellValueFactory(new PropertyValueFactory<Item, Integer>("ItemCode"));
 
         /*The property name "name" will match the getter method getName() of the Person
         objects which returns the name values and are displayed on each row.
          */
         //Column2
-        TableColumn agecol = new TableColumn("Item Name");
-        agecol.setMinWidth(10);
-        agecol.setCellValueFactory(new PropertyValueFactory<Person, Integer>("Age"));
+        TableColumn namecol = new TableColumn("Item Name");
+        namecol.setMinWidth(10);
+        namecol.setCellValueFactory(new PropertyValueFactory<Person, String>("ItemName"));
+
+        TableColumn qtycol = new TableColumn("Quantity");
+        qtycol.setMinWidth(10);
+        qtycol.setCellValueFactory(new PropertyValueFactory<Item, Integer>("Quantity"));
+
+        TableColumn dscol= new TableColumn("Discount");
+        dscol.setMinWidth(10);
+        dscol.setCellValueFactory(new PropertyValueFactory<Item, Integer>("Discount"));
+
+        TableColumn pccol= new TableColumn("Price");
+        pccol.setMinWidth(10);
+        pccol.setCellValueFactory(new PropertyValueFactory<Item, Integer>("Discount"));
+
 
         tbl.setEditable(true);
         tbl.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY );
         tbl.setItems(data);// table items are getting populated from observable list
-        tbl.getColumns().addAll(namecol, agecol); // adding columns to table
+        tbl.getColumns().addAll(itemcol, namecol, qtycol, dscol, pccol); // adding columns to table
         vb1.getChildren().addAll(l1, tbl);
 
         //Left pane with a gridpane and a add button
 
         Label ln = new Label();
-        ln.setText("Name");
+        ln.setText("Item code");
         Label l2 = new Label();
-        l2.setText("Age");
+        l2.setText("Item Name");
+        Label l3 = new Label();
+        l3.setText("Quantity");
+        Label l4 = new Label();
+        l4.setText("Discount");
+        Label l5 = new Label();
+        l5.setText("Price");
 
         TextField tn = new TextField();
         TextField ta = new TextField();
+        TextField tb = new TextField();
+        TextField tc = new TextField();
+        TextField td = new TextField();
+
         Button b1 = new Button("Add");
 
         g1.add(ln, 0, 0);
         g1.add(tn, 1, 0);
         g1.add(l2, 0, 1);
         g1.add(ta, 1, 1);
+        g1.add(l3, 0, 2);
+        g1.add(tb, 1, 2);
+        g1.add(l4, 0, 3);
+        g1.add(tc, 1, 3);
+        g1.add(l5, 0, 4);
+        g1.add(td, 1, 4);
 
         g1.setPadding(new Insets(10, 10, 10, 10));
         g1.setHgap(10);
@@ -115,11 +144,14 @@ public class Examples extends Application {
         EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) { //clicking add button causes the data enetred in the grid pane
-                data.add(new Person(tn.getText(), Integer.parseInt(ta.getText()))); //to be populated in the Table view
+                data.add(new Item(Integer.parseInt(tn.getText()), ta.getText(), Integer.parseInt(tb.getText()), Double.parseDouble(tc.getText()), Double.parseDouble(td.getText())) ); //to be populated in the Table view
                 //add() method appends to list.
                 // it is method a declared in the java.util.List interface that was inherited by ObservableList interface
                 tn.clear();
                 ta.clear();
+                tb.clear();
+                tc.clear();
+                td.clear();
             }
         };
         b1.setOnAction(event2);
@@ -131,17 +163,21 @@ public class Examples extends Application {
         //*************************************************************************
         //Scene2
         //modify  scene to modify the age given a name
-        Label ul2 = new Label("Enter the Name of a person to update");
+        Label ul2 = new Label("Enter Item Name");
         ul2.setFont(new Font("Courier", 14));
-        Label ln2 = new Label("Name");
-        Label l22 = new Label("Age");
+        Label ln2 = new Label("Item Name");
+        Label l22 = new Label("Quantity");
+        Label l32= new Label ("Price");
         TextField tn2 = new TextField();
         TextField ta2 = new TextField();
+        TextField tb2= new TextField();
         Button b12 = new Button("Update");
         g2.add(ln2, 0, 0);
         g2.add(tn2, 1, 0);
         g2.add(l22, 0, 1);
         g2.add(ta2, 1, 1);
+        g2.add(l32, 0, 2);
+        g2.add(tb2, 1, 2);
         Label lu= new Label();
         g2.setPadding(new Insets(10, 10, 10, 10));
         g2.setHgap(10);
@@ -157,8 +193,8 @@ public class Examples extends Application {
                 String sid = tn2.getText();
                 boolean f=false;
                 for (int i = 0; i < tbl.getItems().size(); i++) {
-                    if (((String)tbl.getItems().get(i).getName()).equals(sid)) {
-                        Person p = new Person(tn2.getText(), Integer.parseInt(ta2.getText()));
+                    if (((String)tbl.getItems().get(i).getItemName()).equals(sid)) {
+                        Item p = new Item(tbl.getItems().get(i).getItemCode(), tbl.getItems().get(i).getItemName(), Integer.parseInt(ta2.getText()), tbl.getItems().get(i).getDiscount(), Double.parseDouble(tb2.getText()) );
                         tbl.getItems().set(i, p); //inserts the Person object at index i
                         f=true;
                     }
@@ -173,11 +209,12 @@ public class Examples extends Application {
                 else {
                     alerte.setTitle("Error");
                     alerte.setHeaderText(null);
-                    alerte.setContentText("Enetered Person's ID not found..");
+                    alerte.setContentText("Entered Item Name not found..");
                     alerte.showAndWait();
                 }
                 tn2.clear();
                 ta2.clear();
+                tb2.clear();
                 s.setScene(sc1); //after modification going back to scene1
             }
         };
@@ -194,7 +231,7 @@ public class Examples extends Application {
         //Scene 3
         // delete a row in the table view
         VBox vb4= new VBox();
-        Label rl= new Label("Enter the Person's name to remove");
+        Label rl= new Label("Enter the Item name to remove");
         TextField tr= new TextField();
         Button dl= new Button("Delete");
         vb4.getChildren().addAll(rl, tr, dl);
@@ -208,7 +245,7 @@ public class Examples extends Application {
                 String sid = tr.getText();
                 boolean df =false;
                 for (int i = 0; i < tbl.getItems().size(); i++) {
-                    if (((String)tbl.getItems().get(i).getName()).equals(sid)) {
+                    if (((String)tbl.getItems().get(i).getItemName()).equals(sid)) {
                         tbl.getItems().remove(i); //removes the record at index i
                         df=true;
                     }
@@ -223,10 +260,10 @@ public class Examples extends Application {
                 else {
                     alerte.setTitle("Error");
                     alerte.setHeaderText(null);
-                    alerte.setContentText("Entered Person's ID not found..");
+                    alerte.setContentText("Entered Item Name not found..");
                     alerte.showAndWait();
                 }
-                tn2.clear();
+                tr.clear();
                 s.setScene(sc1); //after deletion going back to scene1
 
             }

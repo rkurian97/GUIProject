@@ -1,46 +1,34 @@
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-public abstract class Item {
-    private SimpleIntegerProperty itemCode;
-    private SimpleStringProperty itemName;
-    private SimpleIntegerProperty quantity;
-    private double discountedAmount;
+public class Item {
+    private int itemCode;
+    private String itemName;
+    private int quantity;
+    private double discount;
     private double price;
 
-    public Item(SimpleIntegerProperty itemCode, SimpleStringProperty itemName, SimpleIntegerProperty quantity, double discountedAmount, double price) {
+    public Item(int itemCode, String itemName, int quantity, double discount, double price) {
         this.itemCode = itemCode;
         this.itemName = itemName;
         this.quantity = quantity;
-        this.discountedAmount = discountedAmount;
+        this.discount = discount;
         this.price = price;
     }
 
     public int getItemCode() {
-        return itemCode.get();
-    }
-
-    public int itemCodeProperty() {
-        return itemCode.get();
+        return itemCode;
     }
 
     public String getItemName() {
-        return itemName.get();
-    }
-
-    public String itemNameProperty() {
-        return itemName.get();
+        return itemName;
     }
 
     public int getQuantity() {
-        return quantity.get();
+        return quantity;
     }
 
-    public int quantityProperty() {
-        return quantity.get();
-    }
-
-    public double getDiscountedAmount() {
-        return discountedAmount;
+    public double getDiscount() {
+        return discount;
     }
 
     public double getPrice() {
@@ -48,19 +36,19 @@ public abstract class Item {
     }
 
     public void setItemCode(int itemCode) {
-        this.itemCode.set(itemCode);
+        this.itemCode = itemCode;
     }
 
     public void setItemName(String itemName) {
-        this.itemName.set(itemName);
+        this.itemName = itemName;
     }
 
     public void setQuantity(int quantity) {
-        this.quantity.set(quantity);
+        this.quantity = quantity;
     }
 
-    public void setDiscountedAmount(double discountedAmount) {
-        this.discountedAmount = discountedAmount;
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
     public void setPrice(double price) {
