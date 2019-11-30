@@ -13,9 +13,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import java.util.*;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-public class Examples extends Application {
+public class GUI extends Application {
     private BorderPane bp = new BorderPane();
     private  GridPane g1 = new GridPane();
     private GridPane g2 = new GridPane();
@@ -144,7 +145,8 @@ public class Examples extends Application {
         EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) { //clicking add button causes the data enetred in the grid pane
-                data.add(new Item(Integer.parseInt(tn.getText()), ta.getText(), Integer.parseInt(tb.getText()), Double.parseDouble(tc.getText()), Double.parseDouble(td.getText())) ); //to be populated in the Table view
+                Item c= new Item(Integer.parseInt(tn.getText()), ta.getText(), Integer.parseInt(tb.getText()), Double.parseDouble(tc.getText()), Double.parseDouble(td.getText()));
+                data.add(c); //to be populated in the Table view
                 //add() method appends to list.
                 // it is method a declared in the java.util.List interface that was inherited by ObservableList interface
                 tn.clear();
@@ -282,16 +284,5 @@ public class Examples extends Application {
     public static void main (String[]args){
         launch(args);
     }
-    public double categoryFinder(String s){
-        if(s.equals("bananas") || s.equals("apple") || s.equals("oranges") || s.equals("Advil") || s.equals("Ibuprofen") || s.equals("Tylenol")){
-            return 1;
-        }
-        else if (s.equals("twix") || s.equals("nerds") || s.equals("chicken") || s.equals("beef") || s.equals("bike") || s.equals("phone") ){
-            return 2;
-        }
-        else{
-            return 3;
-        }
 
-    }
 }
