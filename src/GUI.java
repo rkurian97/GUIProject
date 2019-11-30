@@ -145,10 +145,27 @@ public class GUI extends Application {
         EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) { //clicking add button causes the data enetred in the grid pane
+                boolean fa= false;
                 Item c= new Item(Integer.parseInt(tn.getText()), ta.getText(), Integer.parseInt(tb.getText()), Double.parseDouble(tc.getText()), Double.parseDouble(td.getText()));
-                data.add(c); //to be populated in the Table view
-                //add() method appends to list.
-                // it is method a declared in the java.util.List interface that was inherited by ObservableList interface
+                if (c.getTaxable()!=0) {
+                    data.add(c);  //to be populated in the Table view
+                    fa=true;
+                }                 // add() method appends to list.
+                                    // it is method a declared in the java.util.List interface that was inherited by ObservableList interface
+
+                if (fa) {
+                    alerts.setTitle("Success");
+                    alerts.setHeaderText(null);
+                    alerts.setContentText("Item in Store!");
+                    alerts.showAndWait();
+                }
+
+                else {
+                    alerte.setTitle("Error");
+                    alerte.setHeaderText(null);
+                    alerte.setContentText("Item not in Store");
+                    alerte.showAndWait();
+                }
                 tn.clear();
                 ta.clear();
                 tb.clear();

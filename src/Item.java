@@ -19,7 +19,7 @@ public class Item {
                 this.taxable= 8.50;
         }
         else if(database.candies.contains(itemName) ||database.sodas.contains(itemName) || database.pfood.contains(itemName)  || database.citems.contains(itemName) ){
-                this.taxable= 1;
+                this.taxable= 1.0;
         }
         else{
              this.taxable= 0;
@@ -45,6 +45,9 @@ public class Item {
         public double getPrice () {
             return price;
         }
+        public double getTaxable(){
+        return taxable;
+        }
 
         public void setItemCode ( int itemCode){
             this.itemCode = itemCode;
@@ -65,4 +68,5 @@ public class Item {
         public void setPrice ( double price){
             this.price = price;
         }
+
 }
