@@ -15,16 +15,19 @@ public class Item {
         this.quantity = quantity;
         this.discount = discount;
         this.price = price;
-        if (database.grocery.contains(itemName) || database.drugs.contains(itemName) ){
-                this.taxable= 8.50;
+        for (int i=0; i<4; i++) {
+            if (this.itemName.equals(database.drugs[i]) || this.itemName.equals(database.grocery[i])){
+                this.taxable= 1;
+                break;
+            }
+            else if(this.itemName.equals(database.candies[i]) || this.itemName.equals(database.sodas[i]) || this.itemName.equals(database.pfood[i])  || this.itemName.equals(database.citems[i])){
+                this.taxable=.0825;
+            }
+            else{
+                this.taxable=0;
+                break;
+            }
         }
-        else if(database.candies.contains(itemName) ||database.sodas.contains(itemName) || database.pfood.contains(itemName)  || database.citems.contains(itemName) ){
-                this.taxable= 1.0;
-        }
-        else{
-             this.taxable= 0;
-        }
-
     }
         public int getItemCode () {
             return itemCode;
