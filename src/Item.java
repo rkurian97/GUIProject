@@ -25,7 +25,7 @@ public class Item {
                 break;
             }
             else{
-                this.taxable=0;
+                this.taxable=0;     // so that i can make a condition if taxable is not in
                 break;
             }
         }
@@ -73,10 +73,18 @@ public class Item {
             this.price = price;
         }
         public double calcDiscount(){
-            return price*discount/100;
+            if (discount!=0){
+                return price*quantity*discount/100;
+            }
+            else{
+                return 0.0;
+            }
         }
         public double calcTax(){
-            return (price-calcDiscount()*taxable);
+            if (taxable==.0825)
+                return ((price*quantity-calcDiscount())*taxable);
+            else
+                return 0.0;
         }
 
 }

@@ -72,7 +72,7 @@ public class GUI extends Application {
         //Column2
         TableColumn namecol = new TableColumn("Item Name");
         namecol.setMinWidth(10);
-        namecol.setCellValueFactory(new PropertyValueFactory<Person, String>("ItemName"));
+        namecol.setCellValueFactory(new PropertyValueFactory<Item, String>("ItemName"));
 
         TableColumn qtycol = new TableColumn("Quantity");
         qtycol.setMinWidth(10);
@@ -80,11 +80,11 @@ public class GUI extends Application {
 
         TableColumn dscol= new TableColumn("Discount");
         dscol.setMinWidth(10);
-        dscol.setCellValueFactory(new PropertyValueFactory<Item, Integer>("Discount"));
+        dscol.setCellValueFactory(new PropertyValueFactory<Item, Double>("Discount"));
 
         TableColumn pccol= new TableColumn("Price");
         pccol.setMinWidth(10);
-        pccol.setCellValueFactory(new PropertyValueFactory<Item, Integer>("Discount"));
+        pccol.setCellValueFactory(new PropertyValueFactory<Item, Double>("Price"));
 
 
         tbl.setEditable(true);
@@ -299,7 +299,7 @@ public class GUI extends Application {
 
         //*********************************************************************************
         //Scene 4 Print and Add Phone number
-       /* VBox vb5= new VBox();
+        VBox vb5= new VBox();
         Label lq= new Label("Enter Phone Number");
         TextField tq= new TextField();
         Button dq= new Button("Print Bill");
@@ -320,15 +320,15 @@ public class GUI extends Application {
                      dz=true;
                 }
                 for (int i = 0; i < tbl.getItems().size(); i++) {
-                        subtotal= tbl.getItems().get(i).getPrice()+subtotal;
+                        subtotal= tbl.getItems().get(i).getPrice()*tbl.getItems().get(i).getQuantity()+subtotal;
                         savings= tbl.getItems().get(i).calcDiscount()+savings;
                         tax_amt= tbl.getItems().get(i).calcTax()+tax_amt;
                     }
                 total=subtotal-savings+tax_amt;
-                System.out.println("Subtotal: "+subtotal);
-                System.out.println("Savings: "+savings);
-                System.out.println("Tax Amount: "+tax_amt);
-                System.out.println("Total: "+total);
+                System.out.printf("Subtotal: %.2f\n", subtotal);
+                System.out.printf("Savings: %.2f\n", savings);
+                System.out.printf("Tax Amount: %.2f\n", tax_amt);
+                System.out.printf("Total: %.2f\n", total);
                 if(dz){
                     alerts.setTitle("Success");
                     alerts.setHeaderText(null);
@@ -353,7 +353,7 @@ public class GUI extends Application {
                 s.setScene(sc4);
             }
         };
-        b5.setOnAction(event5); // Remove button*/
+        b5.setOnAction(event5); // Remove button
     } //end of start
 
     public static void main (String[]args){
