@@ -22,6 +22,7 @@ public class Item {
             }
             else if(this.itemName.equals(database.candies[i]) || this.itemName.equals(database.sodas[i]) || this.itemName.equals(database.pfood[i])  || this.itemName.equals(database.citems[i])){
                 this.taxable=.0825;
+                break;
             }
             else{
                 this.taxable=0;
@@ -70,6 +71,12 @@ public class Item {
 
         public void setPrice ( double price){
             this.price = price;
+        }
+        public double calcDiscount(){
+            return price*discount/100;
+        }
+        public double calcTax(){
+            return (price-calcDiscount()*taxable);
         }
 
 }

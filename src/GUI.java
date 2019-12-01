@@ -33,15 +33,16 @@ public class GUI extends Application {
         tbl = new TableView<>();
         Alert alerts = new Alert(Alert.AlertType.INFORMATION); //success message
         Alert alerte = new Alert(Alert.AlertType.ERROR); //Error message
-        Scene sc1, sc2, sc3; // scenes
+        Scene sc1, sc2, sc3, sc4; // scenes
         sc1 = new Scene(new Group()); // main scene
         s.sizeToScene();  //setting stage to size acording the scene sizes
 
         //top pane in the main scene
-        Button b2 = new Button("Add");
+        Button b2 = new Button("New");
         Button b3 = new Button("Update");
         Button b4 = new Button("Remove");
-        fp.getChildren().addAll(b2, b3, b4); // menubar
+        Button b5= new Button("Print");
+        fp.getChildren().addAll(b2, b3, b4, b5); // menubar
 
 
         //Right Pane with a title and tableview
@@ -296,6 +297,63 @@ public class GUI extends Application {
         };
         b4.setOnAction(event4); // Remove button
 
+        //*********************************************************************************
+        //Scene 4 Print and Add Phone number
+       /* VBox vb5= new VBox();
+        Label lq= new Label("Enter Phone Number");
+        TextField tq= new TextField();
+        Button dq= new Button("Print Bill");
+        vb5.getChildren().addAll(lq, tq, dq);
+        vb5.setPadding(new Insets(10, 10, 10, 10));
+        vb5.setSpacing(10);
+        sc4= new Scene(vb5, 300, 200);
+
+        EventHandler<ActionEvent> event24 = new EventHandler<ActionEvent>() {  // when clicking Check and Print
+            @Override
+            public void handle(ActionEvent event) {
+                double subtotal=0;
+                double savings=0;
+                double tax_amt=0;
+                double total=0;
+                boolean dz =false;
+                if (tbl.getItems().size()>=1){
+                     dz=true;
+                }
+                for (int i = 0; i < tbl.getItems().size(); i++) {
+                        subtotal= tbl.getItems().get(i).getPrice()+subtotal;
+                        savings= tbl.getItems().get(i).calcDiscount()+savings;
+                        tax_amt= tbl.getItems().get(i).calcTax()+tax_amt;
+                    }
+                total=subtotal-savings+tax_amt;
+                System.out.println("Subtotal: "+subtotal);
+                System.out.println("Savings: "+savings);
+                System.out.println("Tax Amount: "+tax_amt);
+                System.out.println("Total: "+total);
+                if(dz){
+                    alerts.setTitle("Success");
+                    alerts.setHeaderText(null);
+                    alerts.setContentText("Printed Results to Console");
+                    alerts.showAndWait();
+                }
+
+                else {
+                    alerte.setTitle("Error");
+                    alerte.setHeaderText(null);
+                    alerte.setContentText("No items entered");
+                    alerte.showAndWait();
+                }
+                tq.clear();
+                s.setScene(sc1); //after printing going back to scene1
+
+            }
+        };
+        dq.setOnAction(event24);
+        EventHandler<ActionEvent> event5 = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                s.setScene(sc4);
+            }
+        };
+        b5.setOnAction(event5); // Remove button*/
     } //end of start
 
     public static void main (String[]args){
