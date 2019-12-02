@@ -1,5 +1,4 @@
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+
 public class Item {
     private int itemCode;
     private String itemName;
@@ -15,7 +14,7 @@ public class Item {
         this.quantity = quantity;
         this.discount = discount;
         this.price = price;
-        for (int i=0; i<4; i++) {
+        for (int i=0; i<4; i++) {  // checks every string array to see if item is in store and then assigns tax based on category
             if (this.itemName.equals(database.drugs[i]) || this.itemName.equals(database.grocery[i])){
                 this.taxable= 1;
                 break;

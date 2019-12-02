@@ -1,6 +1,4 @@
 import javafx.application.Application;
-import javafx.application.Application;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,9 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import java.util.*;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 public class GUI extends Application {
     private BorderPane bp = new BorderPane();
     private  GridPane g1 = new GridPane();
@@ -35,7 +31,7 @@ public class GUI extends Application {
         Alert alerte = new Alert(Alert.AlertType.ERROR); //Error message
         Scene sc1, sc2, sc3, sc4; // scenes
         sc1 = new Scene(new Group()); // main scene
-        s.sizeToScene();  //setting stage to size acording the scene sizes
+        s.sizeToScene();  //setting stage to size according to the scene sizes
 
         //top pane in the main scene
         Button b2 = new Button("New");
@@ -74,14 +70,17 @@ public class GUI extends Application {
         namecol.setMinWidth(10);
         namecol.setCellValueFactory(new PropertyValueFactory<Item, String>("ItemName"));
 
+        //Column3
         TableColumn qtycol = new TableColumn("Quantity");
         qtycol.setMinWidth(10);
         qtycol.setCellValueFactory(new PropertyValueFactory<Item, Integer>("Quantity"));
 
+        //Column4
         TableColumn dscol= new TableColumn("Discount");
         dscol.setMinWidth(10);
         dscol.setCellValueFactory(new PropertyValueFactory<Item, Double>("Discount"));
 
+        //Column5
         TableColumn pccol= new TableColumn("Price");
         pccol.setMinWidth(10);
         pccol.setCellValueFactory(new PropertyValueFactory<Item, Double>("Price"));
@@ -91,7 +90,7 @@ public class GUI extends Application {
         tbl.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY );
         tbl.setItems(data);// table items are getting populated from observable list
         tbl.getColumns().addAll(itemcol, namecol, qtycol, dscol, pccol); // adding columns to table
-        vb1.getChildren().addAll(l1, tbl);
+        vb1.getChildren().addAll(l1, tbl); //adding label and table to vbox
 
         //Left pane with a gridpane and a add button
 
@@ -106,6 +105,7 @@ public class GUI extends Application {
         Label l5 = new Label();
         l5.setText("Price");
 
+        //textfields for all labels
         TextField tn = new TextField();
         TextField ta = new TextField();
         TextField tb = new TextField();
@@ -114,6 +114,7 @@ public class GUI extends Application {
 
         Button b1 = new Button("Add");
 
+        //positioning labels next to text fields in first grid pane
         g1.add(ln, 0, 0);
         g1.add(tn, 1, 0);
         g1.add(l2, 0, 1);
@@ -125,6 +126,7 @@ public class GUI extends Application {
         g1.add(l5, 0, 4);
         g1.add(td, 1, 4);
 
+        //sizing
         g1.setPadding(new Insets(10, 10, 10, 10));
         g1.setHgap(10);
         g1.setVgap(10);
@@ -145,23 +147,23 @@ public class GUI extends Application {
         b2.setOnAction(event1);
         EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) { //clicking add button causes the data enetred in the grid pane
+            public void handle(ActionEvent event) { //clicking add button causes the data entered into the grid pane
                 boolean fa= false;
                 Item c= new Item(Integer.parseInt(tn.getText()), ta.getText(), Integer.parseInt(tb.getText()), Double.parseDouble(tc.getText()), Double.parseDouble(td.getText()));
-                if (c.getTaxable()!=0) {
+                if (c.getTaxable()!=0) {  //checks the tax of Item, if tax is 0 then item is not store, if 1 then tax exempt, otherwise 8.25% tax
                     data.add(c);  //to be populated in the Table view
-                    fa=true;
-                }                 // add() method appends to list.
-                                    // it is method a declared in the java.util.List interface that was inherited by ObservableList interface
+                    fa=true;      // add() method appends to list.
+                }                 // it is method a declared in the java.util.List interface that was inherited by ObservableList interface
 
-                if (fa) {
+
+                if (fa) { //sucess message if Item is in store
                     alerts.setTitle("Success");
                     alerts.setHeaderText(null);
                     alerts.setContentText("Item in Store!");
                     alerts.showAndWait();
                 }
 
-                else {
+                else { // error message for when Item is not in store
                     alerte.setTitle("Error");
                     alerte.setHeaderText(null);
                     alerte.setContentText("Item not in Store");
@@ -182,7 +184,7 @@ public class GUI extends Application {
         s.show();
         //*************************************************************************
         //Scene2
-        //modify  scene to modify the age given a name
+        //modify  scene to modify Price and Quantity given Item Name
         Label ul2 = new Label("Enter Item Name");
         ul2.setFont(new Font("Courier", 14));
         Label ln2 = new Label("Item Name");
@@ -207,15 +209,15 @@ public class GUI extends Application {
         vb3.setPadding(new Insets(10, 10, 10, 10));
         EventHandler<ActionEvent> event22 = new EventHandler<ActionEvent>() {
             @Override
-               /* When the button was clicked, the record with the name that matches with the name  entered in the
+               /* When the button was clicked, the record with the item name that matches with the item name  entered in the
                textfield (tn2) will be updated */
             public void handle(ActionEvent event) {
                 String sid = tn2.getText();
                 boolean f=false;
                 for (int i = 0; i < tbl.getItems().size(); i++) {
-                    if (((String)tbl.getItems().get(i).getItemName()).equals(sid)) {
+                    if (tbl.getItems().get(i).getItemName().equals(sid)) {
                         Item p = new Item(tbl.getItems().get(i).getItemCode(), tbl.getItems().get(i).getItemName(), Integer.parseInt(ta2.getText()), tbl.getItems().get(i).getDiscount(), Double.parseDouble(tb2.getText()) );
-                        tbl.getItems().set(i, p); //inserts the Person object at index i
+                        tbl.getItems().set(i, p); //inserts the Item object at index i and replaces existing object
                         f=true;
                     }
                 }
@@ -246,7 +248,7 @@ public class GUI extends Application {
                 s.setScene(sc2); //Clicking the update button causes scene 2
             }
         };
-        b3.setOnAction(event3);  // Modify  button
+        b3.setOnAction(event3);  // Update  button
         //*********************************************************************************
         //Scene 3
         // delete a row in the table view
@@ -261,11 +263,11 @@ public class GUI extends Application {
 
         EventHandler<ActionEvent> event23 = new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) {  //will find Item name in table corresponding with Item Name entered in textfield tr
                 String sid = tr.getText();
                 boolean df =false;
                 for (int i = 0; i < tbl.getItems().size(); i++) {
-                    if (((String)tbl.getItems().get(i).getItemName()).equals(sid)) {
+                    if ((tbl.getItems().get(i).getItemName()).equals(sid)) {
                         tbl.getItems().remove(i); //removes the record at index i
                         df=true;
                     }
@@ -288,7 +290,7 @@ public class GUI extends Application {
 
             }
         };
-        dl.setOnAction(event23); //
+        dl.setOnAction(event23); // Delete Button
 
         EventHandler<ActionEvent> event4 = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -298,7 +300,7 @@ public class GUI extends Application {
         b4.setOnAction(event4); // Remove button
 
         //*********************************************************************************
-        //Scene 4 Print and Add Phone number
+        //Scene 4 Print and Add Phone number  Checks Database for Customer profile and applies discount if necessary and calculates total bill
         VBox vb5= new VBox();
         Label lq= new Label("Enter Phone Number");
         TextField tq= new TextField();
@@ -311,38 +313,38 @@ public class GUI extends Application {
         EventHandler<ActionEvent> event24 = new EventHandler<ActionEvent>() {  // when clicking Check and Print
             @Override
             public void handle(ActionEvent event) {
-                double subtotal=0;
+                double subtotal=0;   //initializing required variables for total bill calculation
                 double savings=0;
                 double tax_amt=0;
                 double total=0;
                 boolean dz =false;
-                if (tbl.getItems().size()>=1){
+                if (tbl.getItems().size()>=1){   // Checks to see if they entered any items
                      dz=true;
                 }
-                for (int i = 0; i < tbl.getItems().size(); i++) {
+                for (int i = 0; i < tbl.getItems().size(); i++) {  //calculates subtotal savings and tax amount from table
                         subtotal= tbl.getItems().get(i).getPrice()*tbl.getItems().get(i).getQuantity()+subtotal;
                         savings= tbl.getItems().get(i).calcDiscount()+savings;
                         tax_amt= tbl.getItems().get(i).calcTax()+tax_amt;
                     }
-                if (database.Customer.containsKey(tq.getText())){
-                               double temp_points= (subtotal-savings+tax_amt)/100.0;
-                               database.Customer.put(tq.getText(), database.Customer.get(tq.getText())+temp_points);
-                               if (database.Customer.get(tq.getText())>=100.0){
+                if (database.Customer.containsKey(tq.getText())){   // checks to see if phone number entered matches matches with key in Customers database
+                               double temp_points= (subtotal-savings+tax_amt)/100.0;  // calculates points from current transaction
+                               database.Customer.put(tq.getText(), database.Customer.get(tq.getText())+temp_points); // adds points from current transaction to points already had
+                               if (database.Customer.get(tq.getText())>=100.0){ // checks to see if they are eligible for 10% discount
                                    total=(subtotal-savings+tax_amt)-(subtotal-savings+tax_amt)*.1;
                                    database.Customer.put(tq.getText(), database.Customer.get(tq.getText())-100.0);
                                    System.out.println("Customer account was found, discount applied remaining points: "+ database.Customer.get(tq.getText()));
                                }
-                               else {
+                               else {  // when not eligible for discount
                                    total=(subtotal-savings+tax_amt);
                                    System.out.println("Customer account was found, not eligible for discount, current points: "+database.Customer.get(tq.getText()));
                                }
                 }
-                else{
+                else{ // if phone number is not found phone number input will be added to database and will then check to see if they are eligible for discount
                     double temp_points= (subtotal-savings+tax_amt)/100.0;
                     database.Customer.put(tq.getText(), temp_points);
                     if (database.Customer.get(tq.getText())>=100.0){
                         total=(subtotal-savings+tax_amt)-(subtotal-savings+tax_amt)*.1;
-                        database.Customer.put(tq.getText(), database.Customer.get(tq.getText())-100.0);
+                        database.Customer.put(tq.getText(), database.Customer.get(tq.getText())-100.0); //adds remaining points to account after 100 points used
                         System.out.println("Customer account was not found, new account created, discount applied remaining points: "+ database.Customer.get(tq.getText()));
                     }
                     else{
@@ -350,7 +352,7 @@ public class GUI extends Application {
                         System.out.println("Customer account was not found, new account created, not eligible for discount, current points: "+database.Customer.get(tq.getText()));
                     }
                 }
-                System.out.printf("Subtotal: %.2f\n", subtotal);
+                System.out.printf("Subtotal: %.2f\n", subtotal);  //prints all price info
                 System.out.printf("Savings: %.2f\n", savings);
                 System.out.printf("Tax Amount: %.2f\n", tax_amt);
                 System.out.printf("Total: %.2f\n", total);
@@ -368,7 +370,7 @@ public class GUI extends Application {
                     alerte.showAndWait();
                 }
                 tq.clear();
-                tbl.getItems().remove(data);
+                data.clear();   // clears data within table for new customer transaction
                 s.setScene(sc1); //after printing going back to scene1
 
             }
@@ -379,7 +381,7 @@ public class GUI extends Application {
                 s.setScene(sc4);
             }
         };
-        b5.setOnAction(event5); // Remove button
+        b5.setOnAction(event5); // Print Button
     } //end of start
 
     public static void main (String[]args){
