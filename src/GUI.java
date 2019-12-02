@@ -324,7 +324,32 @@ public class GUI extends Application {
                         savings= tbl.getItems().get(i).calcDiscount()+savings;
                         tax_amt= tbl.getItems().get(i).calcTax()+tax_amt;
                     }
-                total=subtotal-savings+tax_amt;
+                if (database.Customer.containsKey(tq.getText())){
+                               double temp_points= (subtotal-savings+tax_amt)/100.0;
+                               database.Customer.put(tq.getText(), database.Customer.get(tq.getText())+temp_points);
+                               if (database.Customer.get(tq.getText())>=100.0){
+                                   total=(subtotal-savings+tax_amt)-(subtotal-savings+tax_amt)*.1;
+                                   database.Customer.put(tq.getText(), database.Customer.get(tq.getText())-100.0);
+                                   System.out.println("Customer account was found, discount applied remaining points: "+ database.Customer.get(tq.getText()));
+                               }
+                               else {
+                                   total=(subtotal-savings+tax_amt);
+                                   System.out.println("Customer account was found, not eligible for discount, current points: "+database.Customer.get(tq.getText()));
+                               }
+                }
+                else{
+                    double temp_points= (subtotal-savings+tax_amt)/100.0;
+                    database.Customer.put(tq.getText(), temp_points);
+                    if (database.Customer.get(tq.getText())>=100.0){
+                        total=(subtotal-savings+tax_amt)-(subtotal-savings+tax_amt)*.1;
+                        database.Customer.put(tq.getText(), database.Customer.get(tq.getText())-100.0);
+                        System.out.println("Customer account was not found, new account created, discount applied remaining points: "+ database.Customer.get(tq.getText()));
+                    }
+                    else{
+                        total=(subtotal-savings+tax_amt);
+                        System.out.println("Customer account was not found, new account created, not eligible for discount, current points: "+database.Customer.get(tq.getText()));
+                    }
+                }
                 System.out.printf("Subtotal: %.2f\n", subtotal);
                 System.out.printf("Savings: %.2f\n", savings);
                 System.out.printf("Tax Amount: %.2f\n", tax_amt);
@@ -343,6 +368,7 @@ public class GUI extends Application {
                     alerte.showAndWait();
                 }
                 tq.clear();
+                tbl.getItems().remove(data);
                 s.setScene(sc1); //after printing going back to scene1
 
             }

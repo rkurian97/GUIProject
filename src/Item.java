@@ -25,8 +25,7 @@ public class Item {
                 break;
             }
             else{
-                this.taxable=0;     // so that i can make a condition if taxable is not in
-                break;
+                this.taxable=0;     // so that i can make a condition if taxable is 0 then item is not in store
             }
         }
     }
