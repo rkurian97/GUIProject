@@ -71,12 +71,9 @@ public class Item {
             this.price = price;
         }
         public double calcDiscount(){
-            if (discount!=0){
+
                 return price*quantity*discount/100;
-            }
-            else{
-                return 0.0;
-            }
+
         }
         public double calcTax(){
             if (taxable==.0825)
@@ -84,5 +81,6 @@ public class Item {
             else
                 return 0.0;
         }
+
 
 }

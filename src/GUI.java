@@ -1,3 +1,33 @@
+/* RULES FOR CODE
+        input for item code must be int, input for quantity must be an int
+
+        input for item name must correspond with an item name in String arrays in database class, item name must also be undercase letters
+                Items in store
+                Grocery: "banana", "apple", "orange", "bread"
+                Drugs: "advil", "tylenol", "motrin", "zantac"
+                Candy: "skittles", "nerds", "kitkat", "twix"
+                Sodas: "fanta", "coke", "sprite", "ginger ale"
+                Prepared food: "chicken", "turkey", "beef", "salad"
+                Consumer items: "bike", "tv", "computer", "toilet paper"
+
+        data for points and new phone numbers will be lost when closing GUI, must be on same run to keep track of points otherwise data will be reset
+
+   ASSUMPTIONS FOR CODE
+           Any item code can be entered but it is assumed that correct item code will be entered (You can put any item code when testing it will not affect functionality of code)
+
+           Any number/string can be entered after pressing print but it is assumed a valid phone number will be entered (will also not produce error if empty field is entered but assumed phone number will be entered)
+                    If you want to enter a phone number already in the database you may see some options in the database class in the hash set for Customers to test
+                    Recommend using 3316572323 phone number to test when rebate discount is applied as points on this account is already 90
+
+
+           After printing transaction use clear to clear table and start new transaction
+
+           A same item will not be entered twice as there is no point and you could just increase quantity.
+            For example: entering advil twice will not produce error but is assumed this will not be done
+ */
+
+
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,7 +55,7 @@ public class GUI extends Application {
     private ObservableList<Item> data;
 
     public void start(Stage s) {
-        TableView<Item> tbl; //table view to store person objects
+        TableView<Item> tbl; //table view to store item objects
         tbl = new TableView<>();
         Alert alerts = new Alert(Alert.AlertType.INFORMATION); //success message
         Alert alerte = new Alert(Alert.AlertType.ERROR); //Error message
@@ -38,7 +68,8 @@ public class GUI extends Application {
         Button b3 = new Button("Update");
         Button b4 = new Button("Remove");
         Button b5= new Button("Print");
-        fp.getChildren().addAll(b2, b3, b4, b5); // menubar
+        Button b6= new Button("Clear");
+        fp.getChildren().addAll(b2, b3, b4, b5, b6); // menubar
 
 
         //Right Pane with a title and tableview
@@ -176,7 +207,7 @@ public class GUI extends Application {
                 td.clear();
             }
         };
-        b1.setOnAction(event2);
+        b1.setOnAction(event2);  // sets action to Button Add
 
         ((Group) sc1.getRoot()).getChildren().add(bp);  //Borderpane is added to the scene
         //sc1= new Scene(bp);
@@ -370,18 +401,26 @@ public class GUI extends Application {
                     alerte.showAndWait();
                 }
                 tq.clear();
-                data.clear();   // clears data within table for new customer transaction
                 s.setScene(sc1); //after printing going back to scene1
 
             }
         };
         dq.setOnAction(event24);
-        EventHandler<ActionEvent> event5 = new EventHandler<ActionEvent>() {
+        EventHandler<ActionEvent> event5 = new EventHandler<>() {
             public void handle(ActionEvent event) {
                 s.setScene(sc4);
             }
         };
         b5.setOnAction(event5); // Print Button
+
+
+        // Clear button
+        EventHandler<ActionEvent> event6= new EventHandler<>(){
+            public void handle( ActionEvent event){
+                data.clear();  // clears data within table for new customer transaction
+            }
+        };
+        b6.setOnAction(event6);
     } //end of start
 
     public static void main (String[]args){
