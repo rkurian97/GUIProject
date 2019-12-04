@@ -1,7 +1,7 @@
 /* RULES FOR CODE
         input for item code must be int, input for quantity must be an int
 
-        input for item name must correspond with an item name in String arrays in database class, item name must also be undercase letters
+        input for item name must correspond with an item name in String arrays in database class, item name can be uppercase or lowercase
                 Items in store
                 Grocery: "banana", "apple", "orange", "bread"
                 Drugs: "advil", "tylenol", "motrin", "zantac"
@@ -93,8 +93,8 @@ public class GUI extends Application {
         */
         itemcol.setCellValueFactory(new PropertyValueFactory<Item, Integer>("ItemCode"));
 
-        /*The property name "name" will match the getter method getName() of the Person
-        objects which returns the name values and are displayed on each row.
+        /*The property name "ItemName" will match the getter method getItemName() of the Item
+        objects which returns the item name values and are displayed on each row.
          */
         //Column2
         TableColumn namecol = new TableColumn("Item Name");
@@ -180,7 +180,7 @@ public class GUI extends Application {
             @Override
             public void handle(ActionEvent event) { //clicking add button causes the data entered into the grid pane
                 boolean fa= false;
-                Item c= new Item(Integer.parseInt(tn.getText()), ta.getText(), Integer.parseInt(tb.getText()), Double.parseDouble(tc.getText()), Double.parseDouble(td.getText()));
+                Item c= new Item(Integer.parseInt(tn.getText()), ta.getText().toLowerCase(), Integer.parseInt(tb.getText()), Double.parseDouble(tc.getText()), Double.parseDouble(td.getText()));
                 if (c.getTaxable()!=0) {  //checks the tax of Item, if tax is 0 then item is not store, if 1 then tax exempt, otherwise 8.25% tax
                     data.add(c);  //to be populated in the Table view
                     fa=true;      // add() method appends to list.
